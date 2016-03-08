@@ -271,4 +271,9 @@ ger = Spot_Grif(150)
 print(oz.gira_spot)
 print(ger.gira_spot)
 
+
+calcu = input('Enter a calution ')
+
+print(calcu)
+
 ##page.69
