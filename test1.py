@@ -164,4 +164,27 @@ for x in range(0,4):
     ##print(x+1)
     print(x+1),ingredients[x]
     
+    
+def testfunc(fname, lname):
+    print('hello %s %s' %(fname, lname))
+
+firstname = 'Joe'
+secname = 'Robertson'
+
+testfunc(firstname, secname)
+
+def saving(pocket_money, paper_money, spending):
+    return pocket_money + paper_money - spending
+
+print (saving(10, 10, 5))
+
+another_variable = 100
+def variable_test():
+    fir_variable = 10
+    second_variable = 20
+    return fir_variable * second_variable + another_variable
+
+print(variable_test())
+print(another_variable)
+
 ##page.69
