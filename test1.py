@@ -208,5 +208,67 @@ def silly_age_joke():
 ##age = sys.stdin.readline()
 silly_age_joke()
 
+class Things:
+    pass
+
+class Inanimate(Things):
+    pass
+
+class Animate(Things):
+    pass
+
+class SideWalks(Inanimate):
+    pass
+
+class Animals(Animate):
+    def brath(self):
+        print('Breathing')
+    def move(self):
+        print('Moving')
+    def eat_food(self):
+        print('Eating Food')
+
+class Mammal(Animals):
+    def feed_young(self):
+        print('Feeding young')
+
+class Giraffes(Mammal):
+    def eat_leaves_from_trees(self):
+        self.eat_food()
+    def find_food(self):
+        self.move()
+        print("I've found food !")
+        self.eat_food()
+    def dance_a_jig(self):
+        self.move()
+        self.move()
+        self.move()
+        self.move()
+
+##reginald = Giraffes()
+
+##reginald.dance_a_jig()
+
+def this_is_a_normal_function():
+    print('I am a normal function ')
+
+class ThisIsMySillyClass():
+    def this_is_a_function(self):
+        print('I am a class function')
+    def this_is_also_class_function(self):
+        print('I am also a class funtion.see?')
+
+##my = ThisIsMySillyClass()
+##my.this_is_also_class_function()
+
+class Spot_Grif:
+    def __init__(self,spots):
+        self.gira_spot = spots
+
+oz = Spot_Grif(100)
+ger = Spot_Grif(150)
+
+print(oz.gira_spot)
+print(ger.gira_spot)
 
 ##page.69
