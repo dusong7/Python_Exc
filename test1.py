@@ -287,4 +287,16 @@ print(max(string))
 count_by_twos = list(range(10,3,-3))
 print(sum(count_by_twos))
 
+
+file = open('C:\\file.txt','w')
+##new = 'This is new Write'
+file.write('Hello')
+##text = file.read()
+##print(text)
+file.close()
+file1 = open('C:\\file.txt')
+text = file1.read()
+print(text)
+
+
 ##page.69
