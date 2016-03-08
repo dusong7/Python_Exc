@@ -276,4 +276,15 @@ calcu = input('Enter a calution ')
 
 print(calcu)
 
+print(len('1234534'))
+
+creat_list = ['unicorn', 'cyclop','fairy']
+print(len(creat_list))
+
+string = 'A, a, B, c, C'
+print(max(string))
+
+count_by_twos = list(range(10,3,-3))
+print(sum(count_by_twos))
+
 ##page.69
