@@ -187,4 +187,26 @@ def variable_test():
 print(variable_test())
 print(another_variable)
 
+__author__ = 'Du'
+print "Hello PyCharm IDE !"
+print "Hello"
+
+import time
+print(time.asctime())
+
+import sys
+##print(sys.stdin.readline())
+
+def silly_age_joke():
+    print('How old are you ?')
+    age = int(sys.stdin.readline())
+    if age >=10 and age <= 13:
+        print('What is 13+ 48 ? A headache')
+    else:
+        print('Huh!')
+
+##age = sys.stdin.readline()
+silly_age_joke()
+
+
 ##page.69
