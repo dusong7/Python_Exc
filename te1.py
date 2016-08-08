@@ -202,3 +202,18 @@
 # 
 # Ja = tarimport("H")
 # Ja.programmer()
+
+# class Person:
+#     def __init__(self, name):
+#         self.name = name
+#         print self.name
+#     def __work(self,salary):
+#         print "%s salary is %d"%(self.name,salary)
+#     def showWorkInfo(self):
+#         self.__work(500)
+# 
+# person = Person("Dusong")
+# person.showWorkInfo()
+# 
+# Dusong
+# Dusong salary is 500
