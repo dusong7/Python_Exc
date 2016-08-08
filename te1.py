@@ -208,7 +208,7 @@
 #         self.name = name
 #         print self.name
 #     def __work(self,salary):
-#         print "%s salary is %d"%(self.name,salary)
+#         print "%s salary is %d"%(self.name,salary) ##private function
 #     def showWorkInfo(self):
 #         self.__work(500)
 # 
