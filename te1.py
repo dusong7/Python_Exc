@@ -161,3 +161,44 @@
 # English Score 0
 
 
+
+# import math
+#
+# for i in range(1,12):
+#     print "curVar%s mult is %d" %(math.pi*i,i)
+
+# def out_foo():
+#     a = 10
+#     def inner_foo():
+#         a = 20
+#         print "innner_foo, a=", a
+#
+#     inner_foo()
+#     print "out_foo, a = ", a
+#
+# a = 30
+# out_foo()
+# print "a=", a
+#
+# class MyClass:
+#     def mufun(self, name):
+#         print name
+#
+# a = MyClass()
+# y = a.mufun
+# y("name")
+#
+# """"Tihis is python lesson"""
+
+# import tarimpo
+#
+# """print dir(tarimpo)""" ##comment this line
+#
+# tarimpo.myname("Dusong7")
+# tar = tarimpo.tarimport("Java")
+# tar.programmer()
+
+# from tarimpo import *
+# 
+# Ja = tarimport("H")
+# Ja.programmer()
