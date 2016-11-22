@@ -161,3 +161,4 @@ emp.name('dd')
 
 emp = emply("Test")
 #inheritance Test
+#http://blog.csdn.net/tclxspy/article/details/51281811
