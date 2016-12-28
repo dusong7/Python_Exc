@@ -47,3 +47,15 @@ int main()
 	cout << "Final" << x << " " << y << " " << z;
 	return 0;
 }
+
+int fic(int x)
+{
+if(x==1 || x==2 )
+{
+return 1;
+}
+else
+{
+return fic(x-1)+fic(x-2)
+}
+}
