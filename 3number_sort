@@ -8,6 +8,16 @@ if y<z:
     y,z = z,y
     
     
+    
+def fib(x):
+  m = []
+  m.append(0)
+  m.append(1)
+  
+  for val in range(2,x):
+    m.append(m[val-1] + m[val-2])
+  return (m[x-1])
+    
 #include <iostream>
 using namespace std;
 
