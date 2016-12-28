@@ -3,7 +3,7 @@ if x<y:
 if y<z:
   if x>z:
     y,z = z,y
-  if x<z:
+  else:
     x,z = z,x
     y,z = z,y
     
