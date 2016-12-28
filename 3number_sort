@@ -8,8 +8,7 @@ if y<z:
     y,z = z,y
     
     
-    #include <iostream>
-
+#include <iostream>
 using namespace std;
 
 int main()
@@ -28,17 +27,17 @@ int main()
 
 	if (y<z)
 	{
-		temp = z;  // 34 12 56 _ //34 12 12 _56 
+		temp = z;  // 34 12 56 _ //34 12 12 _56   //min is z
 		z = y;
 		cout << x << " " << y << " " << z << __LINE__ << endl;
 		if (x >= temp) //34 12 12 _28 // 34 28 12
 		{
-			y = temp;
+			y = temp;   //y is min, t is sub
 			cout << x << " " << y << " " << z << __LINE__ << endl;
 		}
 		else
 		{
-			y = x;   // 34 12 12 _56 // 34 34 12 _56 // 56 34 12
+			y = x;   // 34 12 12 _56 // 34 34 12 _56 // 56 34 12 //x is sub, y=x, y is sub, x = t, x is max
 			x = temp;
 			cout << x << " " << y << " " << z << __LINE__ << endl;
 		}
