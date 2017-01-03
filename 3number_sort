@@ -1,3 +1,16 @@
+class NameInfo:
+    def __init__(self, fname, sname):
+        self.fName = fname;
+        self.sName = sname;
+        self.__fullName = fname +" "+sname  #private variable
+    def show(self):
+        print(self.__fullName)
+
+name = NameInfo("Zhang", "san")
+name.show()
+
+
+
 if x<y:
   x,y = y,x
 if y<z:
