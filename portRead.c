@@ -88,11 +88,11 @@ int main()
     {
         rd_num=read(fd,recv_buf,11);/*再读出*//*返回值是真正读出了多少个字符*/
 
-        printf("%x_%x_%d\n", recv_buf[0], recv_buf[1], rd_num);
+//        printf("%x_%x_%d\n", recv_buf[0], recv_buf[1], rd_num);
         if(rd_num>0)
         {
             int vale = recv_buf[1];
-            printf("value %d,%x\n",vale,vale);
+//            printf("value %d,%x\n",vale,vale);
             if(vale == 83)
             {
                 stcAngle.Angle[0] = (recv_buf[3]<<8)|(recv_buf[2] & 0xff);
@@ -105,7 +105,7 @@ int main()
             }
         }
         else
-            printf("read ttyUSB0 fail!\n");
+//            printf("read ttyUSB0 fail!\n");
         sleep(1);
     }
 }
