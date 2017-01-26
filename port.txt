@@ -1,0 +1,98 @@
+多日来在学习C++，之后又看了关于linux下串口编程的资料，实验多次，失败多次，最后终于成功，以此记录下，希望网友们可以借鉴，少走弯路。
+我的linux是Ubuntu10.10，采用的是VMware的方式，至于minicom等的设置可以参考我的其他博文，有详细介绍和操作步骤，有的还有一些原理的介绍，首先说说为什么要写一个串口编程的程序（其实也是参考网友的资料自己修改的，O(∩_∩)O~），因为我想写一个类似于串口助手的工具，本意是希望在linux下可以使用，即使不能在linux下使用，也可以学习一下串口的基础操作。下面言归正传。
+代码经过我的实践和修改，终于有一个较为理想的结果，至少基本的串口读写可以实现了，当然还存在一些小问题，串口波特率修改过后，显示改过之后的波特率并没有改变，不过经实践确实改变了，可能是函数的问题，关系到局部变量，我并没有采用全局变量，个人觉得可能写函数的时候采用引用的方法可能会解决，不过采用引用的方法，修改了之后函数之后编译不通过，最后放弃，有时间慢慢修改再，先记录下之前的成果。
+首先新建一个文件#vim serialv1.6.c输入以下代码
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <termios.h>
+
+
+/***下面这个set_speed的子程序是在网上别的文章中摘抄过来的，就直接调用了，省了自己编写的麻烦***/
+/*波特率设置，在termios结构体中设置波特率的时候要加B，如设置9600波特率，就要写B9600*/
+int speed_arr[] = {B115200,B38400, B19200, B9600, B4800, B2400, B1200, B300 };
+/* 设置波特率的速率 */
+int name_arr[] = {115200,38400, 19200, 9600, 4800, 2400, 1200, 300 };
+/*linux下操作串口相关的结构体为struct termios */
+/*fd为文件描述符（句柄），fd由打开文件的时候获取
+speed为波特率速率，参数为9600,115200*/
+
+void set_speed(int fd, int speed)
+{
+    int   i;
+    int   status;
+    struct termios   Opt;    //串口相关的结构体
+    tcgetattr(fd, &Opt);    //保存原有的串口配置，保存在Opt中
+    for ( i= 0; i < sizeof(speed_arr) / sizeof(int); i++) 
+    {
+        /* 输入参数为115200，转换为B115200,termios结构体中使用B115200*/
+        if (speed == name_arr[i]) 
+        {    
+            tcflush(fd, TCIOFLUSH);  //刷清输入、输出队列 
+            cfsetispeed(&Opt, speed_arr[i]);//设置输入波特率
+            cfsetospeed(&Opt, speed_arr[i]);//设置输出波特率  
+            status = tcsetattr(fd, TCSANOW, &Opt);//更改设置立即生效
+            
+            if (status != 0) 
+            {   
+                perror("tcsetattr fd1 error");
+                return;    
+            }
+            else
+            {
+                printf("set fd1 ok \n");
+            }
+            
+            tcflush(fd,TCIOFLUSH); //刷清输入、输出队列  
+            }
+    }
+}
+
+int main()
+{
+    //fd用来保存文件描述符，
+    int fd,flag,wr_num=0,rd_num=0;
+    struct termios term;//定义一结构体
+    speed_t baud_rate_i,baud_rate_o,baud_rate_a,baud_rate_b;    //定义波特率
+    char send_buf[]="hello,serial!",recv_buf[20];//读写使用的数组，发送，接收两种数组
+    //fd=open("/dev/ttyUSB0",O_RDWR|O_NONBLOCK|O_NOCTTY | O_NDELAY);     //打开设备文件，使用USB转串口，设备文件为/dev/ttyUSB0 O_NOCTTY | O_NDELAY 
+    fd=open("/dev/ttyUSB0",O_RDWR|O_NONBLOCK);
+    if(fd==-1)    //error
+        printf("can not open the ttyUSB0!\n");
+    else    //ok
+        printf("open USB-Serial ttyUSB0 ok!\n");
+        
+    flag=tcgetattr(fd,&term);/*取得终端设备fd的属性，存放在termios类型的结构体term中*/
+    baud_rate_i=cfgetispeed(&term);/*从term中读取输入波特率*/
+    baud_rate_o=cfgetospeed(&term);/*从term中读取输出波特率*/
+    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d\n",baud_rate_i,baud_rate_o,fd);/*打印设置之前的波特率，目的是方便和设置之后的波特率对比*/
+    
+    set_speed(fd,115200);/*重新设置波特率*/
+    /* tcgetattr 与 tcgetattr成功时返回0  */
+    flag=tcgetattr(fd,&term);/*以下三行读取设置之后的波特率，用cfgetispeed和cfgetospeed得到的波特率是一个序号，可以通过查表（表见程序后面）得到真正的波特率，比如返回13，对应的实际波特率是9600。我这里没有做转换，直接把13输出了。*/
+    baud_rate_a=cfgetispeed(&term);/*设置输入波特率*/
+    baud_rate_b=cfgetospeed(&term);/*设置输出波特率*/
+    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d,flag=%d\n,",baud_rate_a,baud_rate_b,fd,flag);/*打印设置之后的波特率，目的是方便和设置之后的波特率对比*/
+    while(1)
+    {
+        wr_num=write(fd,send_buf,sizeof(send_buf));/*先写入*//*返回值是真正写入了多少个字符*/
+        if(wr_num>0)
+            printf("write ttyUSB0 success!\n");
+        else
+            printf("write ttyUSB0 fail!\n");
+        sleep(1);
+        rd_num=read(fd,recv_buf,sizeof(recv_buf));/*再读出*//*返回值是真正读出了多少个字符*/
+        if(rd_num>0)
+            printf("we can read \"%s\" from the ttyUSB0.total:%d characters\n",recv_buf,rd_num);
+        else
+            printf("read ttyUSB0 fail!\n");
+        sleep(1);
+    }
+}
+输入完成之后保存
+编译#gcc serialv1.6.c -o serialv1.6
+生成的可执行文件为serialv1.6
+下面说明串口的设置，我的代码中使用的是ttyUSB0，并没有使用ttyS0，由于我PC的配置有特殊原因，不过使用USB转串口，大家都可以实现，也算是通用，整体思路是使用将COM2 和USB转串口连接起来，打开COM2的串口助手就可以给USB转串口发送数据，实现串口读写，其实也可以将USB转串口的23引脚短接起来，应该也可以实现，连接好之后运行代码
+#./serialv1.6
+实验效果如图：
