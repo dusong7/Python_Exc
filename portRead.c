@@ -106,7 +106,7 @@ int main()
         }
         else
 //            printf("read ttyUSB0 fail!\n");
-        sleep(1);
+        usleep(20000); //1000us = 1ms
     }
 }
 
