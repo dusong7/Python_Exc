@@ -40,7 +40,8 @@ try:
             hexVal = []
             for i in range(11):
                 hexVal.append(convert(data[i]))
-
+            
+            ##滚转 绕X，俯仰绕Y，偏航绕Z y|_>x，平面上为Y右为X，向上为Z
             ax = ((hexVal[3] << 8) | (hexVal[2] & 0xff)) / 32768 * 180
             ay = ((hexVal[5] << 8) | (hexVal[4] & 0xff)) / 32768 * 180
             az = ((hexVal[7] << 8) | (hexVal[6] & 0xff)) / 32768 * 180
