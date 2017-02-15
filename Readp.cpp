@@ -70,20 +70,23 @@ int OpenPort()
     if(fd==-1)    //error
         printf("can not open the ttyUSB0!\n");
     else
-        return fd;
+    {
+        flag=tcgetattr(fd,&term);
+        baud_rate_i=cfgetispeed(&term);
+        baud_rate_o=cfgetospeed(&term);
+    //printf("baudrate of in is:%d,baudrate of out is%d,fd=%d\n",baud_rate_i,baud_rate_o,fd);/*打印设置之前的波特率，目的是方便和设置之后的波特率对比*/
+
+        set_speed(fd,9600);/*重新设置波特率*/
+    /* tcgetattr 与 tcgetattr成功时返回0  */
+        flag=tcgetattr(fd,&term);/*以下三行读取设置之后的波特率，用cfgetispeed和cfgetospeed得到的波特率是一个序号，可以通过查表（表见程序后面）得到真正的波特率，比如返回13，对应的实际波特率是9600。我这里没有做转换，直接把13输出了。*/
+        baud_rate_a=cfgetispeed(&term);/*设置输入波特率*/
+        baud_rate_b=cfgetospeed(&term);/*设置输出波特率*/
+    }
+
        //ok
        // printf("open USB-Serial ttyUSB0 ok!\n");
 
-    flag=tcgetattr(fd,&term);
-    baud_rate_i=cfgetispeed(&term);
-    baud_rate_o=cfgetospeed(&term);
-    //printf("baudrate of in is:%d,baudrate of out is%d,fd=%d\n",baud_rate_i,baud_rate_o,fd);/*打印设置之前的波特率，目的是方便和设置之后的波特率对比*/
-
-    set_speed(fd,9600);/*重新设置波特率*/
-    /* tcgetattr 与 tcgetattr成功时返回0  */
-    flag=tcgetattr(fd,&term);/*以下三行读取设置之后的波特率，用cfgetispeed和cfgetospeed得到的波特率是一个序号，可以通过查表（表见程序后面）得到真正的波特率，比如返回13，对应的实际波特率是9600。我这里没有做转换，直接把13输出了。*/
-    baud_rate_a=cfgetispeed(&term);/*设置输入波特率*/
-    baud_rate_b=cfgetospeed(&term);/*设置输出波特率*/
+    return fd;
 }
 
 void getData(int fd, Datatype dt, float &val1, float &val2, float &val3)
@@ -142,7 +145,7 @@ void getData(int fd, Datatype dt, float &val1, float &val2, float &val3)
         }
 
 //            printf("read ttyUSB0 fail!\n");
-        usleep(21500); //
+        usleep(20000); //
 
     }
 }
@@ -222,7 +225,7 @@ void getImuData(Datatype dt, float &val1, float &val2, float &val3)
         }
 
 //            printf("read ttyUSB0 fail!\n");
-        usleep(20000); //
+        usleep(21500); //
 
     }
 }
@@ -243,8 +246,9 @@ int main()
 //        out<<val1<<" "<<val2<<" "<<val3<<endl;
 //        getImuData(Acce, val1, val2, val3);
 //        cout<<val1<<" "<<val2<<" "<<val3<<endl;
+
         getData(fd,Angle_acce,val1, val2, val3);
-        //cout<<val1<<" "<<val2<<" "<<val3<<endl;
+        cout<<val1<<" "<<val2<<" "<<val3<<endl;
 
         getData(fd,Acce,val1, val2, val3);
         cout<<val1<<" "<<val2<<" "<<val3<<endl;
