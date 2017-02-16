@@ -3,7 +3,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <termios.h>
-
 struct SAngle
 {
 	short Angle[3];
@@ -102,7 +101,9 @@ int main()
 //                printf("we can read \"%x_%x_%d_%d\" from the ttyUSB0.total:%d characters\n",recv_buf[0],recv_buf[1],recv_buf[2],recv_buf[3],rd_num);
 //                printf("we can read \"%d_%d_%d_%d\" from the ttyUSB0.total:%d characters\n",recv_buf[4],recv_buf[5],recv_buf[6],recv_buf[7],rd_num);
                 printf("Angle:%.3f %.3f %.3f\r\n",(float)stcAngle.Angle[0]/32768*180,(float)stcAngle.Angle[1]/32768*180,(float)stcAngle.Angle[2]/32768*180);
-            }
+           	int nNum = '0x0';
+		printf("%02X", nNum&255); //后两位	
+    }
         }
         else
 //            printf("read ttyUSB0 fail!\n");
