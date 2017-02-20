@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -18,17 +20,17 @@ void set_speed(int fd, int speed)
 
     int   i;
     int   status;
-    struct termios   Opt;    //串口相关的结构体
-    tcgetattr(fd, &Opt);    //保存原有的串口配置，保存在Opt中
+    struct termios   Opt;    //Ž®¿ÚÏà¹ØµÄœá¹¹Ìå
+    tcgetattr(fd, &Opt);    //±£ŽæÔ­ÓÐµÄŽ®¿ÚÅäÖÃ£¬±£ŽæÔÚOptÖÐ
     for ( i= 0; i < sizeof(speed_arr) / sizeof(int); i++)
     {
-        /* 输入参数为115200，转换为B115200,termios结构体中使用B115200*/
+        /* ÊäÈë²ÎÊýÎª115200£¬×ª»»ÎªB115200,termiosœá¹¹ÌåÖÐÊ¹ÓÃB115200*/
         if (speed == name_arr[i])
         {
-            tcflush(fd, TCIOFLUSH);  //刷清输入、输出队列
-            //cfsetispeed(&Opt, speed_arr[i]);//设置输入波特率
-            cfsetospeed(&Opt, speed_arr[i]);//设置输出波特率
-            status = tcsetattr(fd, TCSANOW, &Opt);//更改设置立即生效
+            tcflush(fd, TCIOFLUSH);  //Ë¢ÇåÊäÈë¡¢Êä³ö¶ÓÁÐ
+            //cfsetispeed(&Opt, speed_arr[i]);//ÉèÖÃÊäÈë²šÌØÂÊ
+            cfsetospeed(&Opt, speed_arr[i]);//ÉèÖÃÊä³ö²šÌØÂÊ
+            status = tcsetattr(fd, TCSANOW, &Opt);//žüžÄÉèÖÃÁ¢ŒŽÉúÐ§
 
             if (status != 0)
             {
@@ -40,19 +42,19 @@ void set_speed(int fd, int speed)
                 printf("set fd1 ok \n");
             }
 
-            tcflush(fd,TCIOFLUSH); //刷清输入、输出队列
+            tcflush(fd,TCIOFLUSH); //Ë¢ÇåÊäÈë¡¢Êä³ö¶ÓÁÐ
             }
     }
 }
 
 int main()
 {
-    //fd用来保存文件描述符，
+    //fdÓÃÀŽ±£ŽæÎÄŒþÃèÊö·û£¬
     int fd,flag,rd_num=0;
-    struct termios term;//定义一结构体
-    speed_t baud_rate_i,baud_rate_o,baud_rate_a,baud_rate_b;    //定义波特率
-    char recv_buf[20];//读写使用的数组，发送，接收两种数组
-    //fd=open("/dev/ttyUSB0",O_RDWR|O_NONBLOCK|O_NOCTTY | O_NDELAY);     //打开设备文件，使用USB转串口，设备文件为/dev/ttyUSB0 O_NOCTTY | O_NDELAY
+    struct termios term;//¶šÒåÒ»œá¹¹Ìå
+    speed_t baud_rate_i,baud_rate_o,baud_rate_a,baud_rate_b;    //¶šÒå²šÌØÂÊ
+    char recv_buf[20];//¶ÁÐŽÊ¹ÓÃµÄÊý×é£¬·¢ËÍ£¬œÓÊÕÁœÖÖÊý×é
+    //fd=open("/dev/ttyUSB0",O_RDWR|O_NONBLOCK|O_NOCTTY | O_NDELAY);     //Žò¿ªÉè±žÎÄŒþ£¬Ê¹ÓÃUSB×ªŽ®¿Ú£¬Éè±žÎÄŒþÎª/dev/ttyUSB0 O_NOCTTY | O_NDELAY
     fd=open("/dev/ttyUSB0",O_RDWR|O_NONBLOCK);
     if(fd==-1)    //error
         printf("can not open the ttyUSB0!\n");
@@ -62,14 +64,14 @@ int main()
     flag=tcgetattr(fd,&term);
     baud_rate_i=cfgetispeed(&term);
     baud_rate_o=cfgetospeed(&term);
-    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d\n",baud_rate_i,baud_rate_o,fd);/*打印设置之前的波特率，目的是方便和设置之后的波特率对比*/
+    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d\n",baud_rate_i,baud_rate_o,fd);/*ŽòÓ¡ÉèÖÃÖ®Ç°µÄ²šÌØÂÊ£¬Ä¿µÄÊÇ·œ±ãºÍÉèÖÃÖ®ºóµÄ²šÌØÂÊ¶Ô±È*/
 
-    set_speed(fd,9600);/*重新设置波特率*/
-    /* tcgetattr 与 tcgetattr成功时返回0  */
-    flag=tcgetattr(fd,&term);/*以下三行读取设置之后的波特率，用cfgetispeed和cfgetospeed得到的波特率是一个序号，可以通过查表（表见程序后面）得到真正的波特率，比如返回13，对应的实际波特率是9600。我这里没有做转换，直接把13输出了。*/
-    baud_rate_a=cfgetispeed(&term);/*设置输入波特率*/
-    baud_rate_b=cfgetospeed(&term);/*设置输出波特率*/
-    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d,flag=%d\n,",baud_rate_a,baud_rate_b,fd,flag);/*打印设置之后的波特率，目的是方便和设置之后的波特率对比*/
+    set_speed(fd,9600);/*ÖØÐÂÉèÖÃ²šÌØÂÊ*/
+    /* tcgetattr Óë tcgetattr³É¹ŠÊ±·µ»Ø0  */
+    flag=tcgetattr(fd,&term);/*ÒÔÏÂÈýÐÐ¶ÁÈ¡ÉèÖÃÖ®ºóµÄ²šÌØÂÊ£¬ÓÃcfgetispeedºÍcfgetospeedµÃµœµÄ²šÌØÂÊÊÇÒ»žöÐòºÅ£¬¿ÉÒÔÍš¹ý²é±í£š±íŒû³ÌÐòºóÃæ£©µÃµœÕæÕýµÄ²šÌØÂÊ£¬±ÈÈç·µ»Ø13£¬¶ÔÓŠµÄÊµŒÊ²šÌØÂÊÊÇ9600¡£ÎÒÕâÀïÃ»ÓÐ×ö×ª»»£¬Ö±œÓ°Ñ13Êä³öÁË¡£*/
+    baud_rate_a=cfgetispeed(&term);/*ÉèÖÃÊäÈë²šÌØÂÊ*/
+    baud_rate_b=cfgetospeed(&term);/*ÉèÖÃÊä³ö²šÌØÂÊ*/
+    printf("baudrate of in is:%d,baudrate of out is%d,fd=%d,flag=%d\n,",baud_rate_a,baud_rate_b,fd,flag);/*ŽòÓ¡ÉèÖÃÖ®ºóµÄ²šÌØÂÊ£¬Ä¿µÄÊÇ·œ±ãºÍÉèÖÃÖ®ºóµÄ²šÌØÂÊ¶Ô±È*/
 
 //    while(1)
 //    {
@@ -85,14 +87,14 @@ int main()
 
     while(1)
     {
-        rd_num=read(fd,recv_buf,11);/*再读出*//*返回值是真正读出了多少个字符*/
+        rd_num=read(fd,recv_buf,11);/*ÔÙ¶Á³ö*//*·µ»ØÖµÊÇÕæÕý¶Á³öÁË¶àÉÙžö×Ö·û*/
 
 //        printf("%x_%x_%d\n", recv_buf[0], recv_buf[1], rd_num);
         if(rd_num>0)
         {
             int vale = recv_buf[1];
 //            printf("value %d,%x\n",vale,vale);
-            if(vale == 83)
+            if(vale == 81)
             {
                 stcAngle.Angle[0] = (recv_buf[3]<<8)|(recv_buf[2] & 0xff);
 				stcAngle.Angle[1] = (recv_buf[5]<<8)|(recv_buf[4] & 0xff);
@@ -100,14 +102,28 @@ int main()
 				//stcAngle.T = ((unsigned short)recv_buf[9]<<8)|recv_buf[8];
 //                printf("we can read \"%x_%x_%d_%d\" from the ttyUSB0.total:%d characters\n",recv_buf[0],recv_buf[1],recv_buf[2],recv_buf[3],rd_num);
 //                printf("we can read \"%d_%d_%d_%d\" from the ttyUSB0.total:%d characters\n",recv_buf[4],recv_buf[5],recv_buf[6],recv_buf[7],rd_num);
-                printf("Angle:%.3f %.3f %.3f\r\n",(float)stcAngle.Angle[0]/32768*180,(float)stcAngle.Angle[1]/32768*180,(float)stcAngle.Angle[2]/32768*180);
-           	int nNum = '0x0';
-		printf("%02X", nNum&255); //后两位	
-    }
+                unsigned short num = '0x0';
+                unsigned short nCheck = '0x0';
+
+                num = (recv_buf[0] + recv_buf[1] + recv_buf[2] + recv_buf[3] + recv_buf[4] + recv_buf[5] +
+                recv_buf[6] + recv_buf[7] + recv_buf[8] + recv_buf[9]) &255;
+                nCheck = recv_buf[10]&255;
+                if(num == nCheck)
+                {
+                    printf("Angle:%.4f %.4f %.4f\r\n",(float)stcAngle.Angle[0]/32768*16,(float)stcAngle.Angle[1]/32768*16,(float)stcAngle.Angle[2]/32768*16);
+                }
+                else
+                {
+                    continue;
+                }
+            }
         }
         else
+        {
+            //
+        }
 //            printf("read ttyUSB0 fail!\n");
-        usleep(20000); //1000us = 1ms //不同的时间间隔导致输出稳定性不同。21500 最好。15000 出现其他不准确数据概率1/3
+        usleep(21500); //1000us = 1ms //²»Í¬µÄÊ±ŒäŒäžôµŒÖÂÊä³öÎÈ¶šÐÔ²»Í¬¡£21500 ×îºÃ¡£15000 ³öÏÖÆäËû²»×ŒÈ·ÊýŸÝžÅÂÊ1/3
     }
 }
 
