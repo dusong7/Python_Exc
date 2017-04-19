@@ -86,12 +86,12 @@ print(x)
 # t2 = threading.Thread(target=movie,args=("theSpeed_",))
 # threads.append(t2)
 #
-# def run():
+#def run():
 #     for t in threads:
 #         t.setDaemon(True)
 #         t.start()
-#
-#     print("All over_")
+#     t.join()
+#     print("All over_%s"%(ctime()))
 #
 # if __name__ == "__main__":
 #     run()
