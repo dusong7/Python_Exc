@@ -6,3 +6,5 @@ sleep 10
 gnome-terminal -x bash -c "roslaunch turtlebot_gazebo amcl_demo.launch map_file:=/home/admini/map6.yaml;exec bash" 
 sleep 5
 gnome-terminal -x bash -c "roslaunch turtlebot_rviz_launchers view_navigation.launch;exec bash"
+
+##system("gnome-terminal -e ./test");  
