@@ -32,3 +32,4 @@ void MainWindow::on_AMClRun_clicked()
 {
     QMessageBox::aboutQt(NULL,"AboutMessage");
 }
+//  system("gnome-terminal -x bash -c \'ls -la;exec bash\'");
