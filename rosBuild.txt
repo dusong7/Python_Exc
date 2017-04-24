@@ -1,0 +1,11 @@
+ 1319  cd ~
+ 1320  roscd navigation/
+ 1321  cd Desktop/
+ 1322  cd navigation_/
+ 1323  cd navigation
+ 1324  catkin_make_isolated --install --use-ninja
+ 1325  source install_isolated/setup.bash
+ 1326  roscd navigation/
+ 1327  source install_isolated/setup.bash
+ 1328  roscd amcl
+ 1329  roslaunch turtlebot_rviz_launchers view_navigation.launch
