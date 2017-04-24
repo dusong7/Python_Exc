@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=clion
+Exec=bash -i -c "/home/admini/Downloads/clion-2016.3/bin/clion.sh" %f
+Terminal=false
+Icon=/home/admini/Downloads/clion-2016.3/bin/clion.png
+Type=Application
+Categories=Development
+
+
+Name[en_US]=CLion
