@@ -1,0 +1,21 @@
+打开"终端窗口"，输入"sudo apt-get install openssh-server"-->回车-->输入"y"-->回车-->安装完成。
+
+查看ssh服务是否启动
+打开"终端窗口"，输入"sudo ps -e |grep ssh"-->回车-->有sshd,说明ssh服务已经启动，如果没有启动，输入"sudo service ssh start"-->回车-->ssh服务就会启动。
+
+使用gedit修改配置文件"/etc/ssh/sshd_config"
+打开"终端窗口"，输入"sudo gedit /etc/ssh/sshd_config"-->回车-->把配置文件中的"PermitRootLogin without-password"加一个"#"号,把它注释掉-->再增加一句"PermitRootLogin yes"-->保存，修改成功。
+
+查看Ubuntu 14.04的IP地址
+打开"终端窗口"，输入"sudo ifconfig"-->回车-->就可以查看到IP地址。
+
+Windows 下载putty input ip and port 22
+
+linux: ssh -l turtlebot xxx.xxx.xxx.xxx
+
+kill terminal: ps -aux | grep bash 
+get PID
+kill xxx
+
+Teamviewer:
+lan:
