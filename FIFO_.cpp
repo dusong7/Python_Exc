@@ -37,6 +37,7 @@ int writeFIFO(int in)
         std::ofstream file;
         file.open("Data.txt");
         file<<in;
+        file.close();
     }
     printf("Process %d opening FIFO O_WRONLY\n", getpid());
     pipe_fd = open(fifo_name, open_mode);
