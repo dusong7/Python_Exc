@@ -156,6 +156,13 @@ int main()
    {
 
      char ch = getch();
+     //printf("%d", ch);
+
+     if( ch == 3)  //Ctrl-C
+     {
+        break;
+     }
+
      if( ch == 'E')
      {
         break;
