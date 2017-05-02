@@ -167,6 +167,10 @@
 #include <fstream>
 #include <cstdio>
 #include <cstring>
+#include  <stdio.h>
+#include  <stdlib.h>
+#include <zconf.h>
+
 
 using namespace std;
 
@@ -186,27 +190,38 @@ bool  isModify()
 
 bool fileWrite(bool bl)
 {
+    FILE *file;
     char *string1;
     if (bl)
     {
 //        string1 = "1";
         memset(string1,0,0);
+        file = fopen("1","w");
+        if (access("file",0))
+        {
+            remove("file");
+        }
     }
     else
     {
 //        string1 = "0";
         memset(string1,0,1);
+        file = fopen("0","w");
+        if (access("file",0))
+        {
+            remove("file");
+        }
     }
-    FILE *file;
-    file = fopen("file","w");
-    fwrite(string1,1,1,file);
+//    FILE *file;
+//    file = fopen("file","w");
+//    fwrite(string1,1,1,file);
     fclose(file);
 }
 
 int main()
 {
     //
-//    fileWrite(false);
-    isModify();
+    fileWrite(false);
+//    isModify();
     return 0;
 }
