@@ -7,6 +7,16 @@ pygame.mixer.init()
 print("播放音乐1")
 track = pygame.mixer.music.load(file)
 
+#also can run
+# import pygame
+# import sys
+
+# pygame.init()
+# pygame.mixer.music.load("call.pcm")
+# pygame.mixer.music.play()
+# # pygame.event.wait()
+# time.sleep(2)
+
 pygame.mixer.music.play()
 time.sleep(2)
 pygame.mixer.music.stop()
