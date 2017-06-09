@@ -31,3 +31,33 @@ while True:
             # print(t.read(11))
             t.close()
             break;
+
+            
+            
+            
+import serial
+import pyaudio
+import time
+import pygame
+import sys
+
+
+# sys.exit()
+
+def audioPaly():
+    pygame.init()
+    pygame.mixer.music.load("zuren.wav")
+    pygame.mixer.music.play()
+    # pygame.event.wait()
+    time.sleep(3)
+
+while True:
+
+    t = serial.Serial('/dev/ttyUSB0', 115200, 8, parity=serial.PARITY_NONE, stopbits=1)
+    if (t.read(6) != b'\n\r\n\rEn'):
+        break
+
+audioPaly()
+
+
+            
