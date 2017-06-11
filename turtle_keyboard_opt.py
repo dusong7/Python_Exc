@@ -146,13 +146,14 @@ if __name__=="__main__":
                 control_speed = min( target_speed, control_speed + 0.02 ) ##cotrol back
             elif target_speed < control_speed:
 		coutrol_time = coutrol_time - 1
-		if coutrol_time > 0:	
+		if coutrol_time > 0:
+		    target_speed = 0.5	##control runspeed
                     control_speed = max( target_speed, control_speed) ##control forward
 		else:
 		    control_speed = max( target_speed, control_speed - 0.02)
             else:
                 control_speed = target_speed
-	    print ("Controlspeed_ %s"%control_speed)
+	    print ("Controlspeed_After %s"%control_speed)
 
             if target_turn > control_turn:
                 control_turn = min( target_turn, control_turn + 0.1 )
