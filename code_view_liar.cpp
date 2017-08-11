@@ -56,22 +56,25 @@
 //compiler: gcc 4.9.2
 **/
 
+#include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int liarCount(int N, int *array)
 {
-    int nCount[10] = {0};
+	int nCount[10] = { 0 };
 	//
-    //统计出每组说谎者数量
-    //e.g (0,1) 有0个说谎者的有1个人
-    //算法复杂度为 O(n2)
-    //STL 下可以用map来解决， 复杂度 O(logN)
+	//统计出每组说谎者数量
+	//e.g (0,1) 有0个说谎者的有1个人
+	//算法复杂度为 O(n2)
+	//STL 下可以用map来解决， 复杂度 O(logN)
+
 	for (int i = 0; i < N; i++)
 	{
+		int value = *array++;
 		for (int j = 0; j < N; j++)
 		{
-			if (*array++ == j)
+			if (value == j)
 			{
 				nCount[j]++;
 			}
@@ -98,29 +101,34 @@ int main(void)
 {
 	int N;  //总人数
 	int *arrayOri; //说谎者数据
-	scanf("%d", &N);
-    //N 值输入可能为负值
-    //malloc 可能失败
-    //
-    if(N>0)
-    {
-        if( arrayOri = (int *)malloc(N * sizeof(int)))
-        {
-            for (size_t i = 0; i < N; i++)
-            {
-                scanf("%d", &*arrayOri++);
-            }
+	scanf_s("%d", &N);
+	//N 值输入可能为负值
+	//malloc 可能失败
+	//
+	if (N>0)
+	{
+		if (arrayOri = (int *)malloc(N * sizeof(int)))
+		{
+			for (int i = 0; i < N; i++)
+			{
+				scanf_s("%d", &arrayOri[i]);
+			}
 
-            //
-            printf("%d\n", liarCount(N, arrayOri));
-            free(arrayOri);
-        }
-    }
+			//for (int i = 0; i < N; i++)
+			//{
+			//	printf("%d", *arrayOri++);
+			//}
+
+			//
+			printf("%d\n", liarCount(N, arrayOri));
+		}
+	}
 	else
-    {
-        //
-    }
+	{
+		//
+	}
 
 	return 0;
 }
+
 
