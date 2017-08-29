@@ -48,3 +48,15 @@ if __name__ == "__main__":
 ##File remote addr copy        
 result = shutil.copytree("//172.30.52.75/Utility/Multimedia/TruRecorder/Document","E://Downloads//Test")
 print result
+
+
+import socket
+
+localIP = socket.gethostbyname(socket.gethostname())
+print "local ip:%s " % localIP
+
+ipList = socket.gethostbyname_ex(socket.gethostname())
+for i in ipList:
+    if i != localIP:
+        print "external IP:%s" % i
+        
