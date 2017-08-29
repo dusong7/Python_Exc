@@ -76,3 +76,28 @@ for i in ipList:
   srcpath='e:\\pic'
   dstpath='f:\\pictotal'
   mycopy(srcpath,dstpath)
+
+import shutil
+import os
+import socket
+# shutil.copy("\\172.30.52.75\Utility\Multimedia\TruRecorder\Document","")
+# shutil.copytree("E://Fold_Bkp","E://Downloads//Test")
+# target_files = r'\\172.30.52.75\Utility\Multimedia\TruRecorder\Document\TruRecorder-Design_spec_addmore.pptx'
+# shutil.copy("target_files","E://Downloads//Test")
+#
+# result = shutil.copytree("//172.30.52.75/Utility/Multimedia/TruRecorder/Document","E://Downloads//Test")
+# print result
+
+
+listContentRemote = os.listdir("//172.30.52.75/Utility/Multimedia/TruRecorder/Document")
+for i in listContentRemote:
+    print i
+# import socket
+#
+# localIP = socket.gethostbyname(socket.gethostname())
+# print "local ip:%s " % localIP
+#
+# ipList = socket.gethostbyname_ex(socket.gethostname())
+# for i in ipList:
+#     if i != localIP:
+#         print "external IP:%s" % i
