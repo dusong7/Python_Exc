@@ -59,4 +59,20 @@ ipList = socket.gethostbyname_ex(socket.gethostname())
 for i in ipList:
     if i != localIP:
         print "external IP:%s" % i
-        
+      
+    
+ # -*- coding: utf-8 -*-
+   #!/usr/bin/python
+   #Filename:copyfile.py
+   import os,shutil
+   def mycopy(srcpath,dstpath):
+       if not os.path.exists(srcpath):
+           print "srcpath not exist!"
+       if not os.path.exists(dstpath):
+           print "dstpath not exist!"
+      for root,dirs,files in os.walk(srcpath,True):
+          for eachfile in files:
+              shutil.copy(os.path.join(root,eachfile),dstpath)
+  srcpath='e:\\pic'
+  dstpath='f:\\pictotal'
+  mycopy(srcpath,dstpath)
